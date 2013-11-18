@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -24,7 +25,7 @@
 			<p class="lead">Please login to your account</p>
 		</div>
 		<div class="row col-md-4">
-			<form role="form">
+			<form role="form" method="post" action=${pageContext.request.contextPath}/login>
 				<div class="form-group">
 					<label for="exampleInputEmail1">Email address</label> <input
 						type="email" class="form-control" id="exampleInputEmail1"
