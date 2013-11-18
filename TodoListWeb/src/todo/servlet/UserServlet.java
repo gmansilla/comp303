@@ -40,7 +40,7 @@ public class UserServlet extends HttpServlet {
 		try {
 			//TODO check user credentials and if everything is ok then redirect to the dashboard
 		} catch (Exception e) {
-			responsePage = "/errorResponse.jsp";
+			responsePage = "/error.jsp";
 		} finally {
 			RequestDispatcher rd = request.getRequestDispatcher(responsePage);
 			rd.forward(request, response);

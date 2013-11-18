@@ -28,7 +28,7 @@
       <div class="row">
 
 
-		<form class="form-horizontal" role="form">
+		<form class="form-horizontal" role="form" method="post" action="${pageContext.request.contextPath}/tasks">
 			<div class="form-group">
 				<label for="inputName" class="col-sm-2 control-label">Task
 					Name</label>
@@ -75,7 +75,7 @@
 			<div class="form-group">
 				<div class="col-sm-offset-2 col-sm-10">
 					<button type="submit" class="btn btn-success">Save</button>
-					<button type="submit" class="btn btn-danger">Cancel</button>
+					<button type="button" class="btn btn-danger" onclick="window.location.href='${pageContext.request.contextPath}/dashboard.jsp'">Cancel</button>
 				</div>
 			</div>
 

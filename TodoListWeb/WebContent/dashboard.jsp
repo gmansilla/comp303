@@ -47,7 +47,7 @@
             <td>Normal</td>
             <td>Not Started</td>
             <td>2013-11-15</td>
-            <td><button type="button" class="btn btn-link">Edit</button></td>
+            <td><a class="btn btn-link" href="${pageContext.request.contextPath}/tasks?id=1">Edit</a></td>
           </tr>
           <tr class="danger">
             <td>2</td>
@@ -55,7 +55,7 @@
             <td>High</td>
             <td>Started</td>
             <td>2013-11-12</td>
-            <td><button type="button" class="btn btn-link">Edit</button></td>
+            <td><a class="btn btn-link" href="${pageContext.request.contextPath}/tasks?id=2">Edit</a></td>
           </tr>
           <tr>
             <td>4</td>
@@ -63,7 +63,7 @@
             <td>Normal</td>
             <td>Not Started</td>
             <td>2013-11-15</td>
-            <td><button type="button" class="btn btn-link">Edit</button></td>
+            <td><a class="btn btn-link" href="${pageContext.request.contextPath}/tasks?id=3">Edit</a></td>
           </tr>
           <tr class="success">
             <td>3</td>
@@ -71,7 +71,7 @@
             <td>High</td>
             <td>Finished</td>
             <td>2013-11-11</td>
-            <td><button type="button" class="btn btn-link">Edit</button></td>
+            <td><a class="btn btn-link" href="${pageContext.request.contextPath}/tasks?id=4">Edit</a></td>
           </tr>
         </tbody>
       </table>

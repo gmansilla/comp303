@@ -28,18 +28,28 @@ public class TodoServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		String responsePage = "/addtask.jsp";
+		String id = request.getParameter("id"); //check if Edit action is being called. It doesn't matter we treat this as a string here.
+		if (id != null) {
+			//TODO get the current data assigned to that Task and load the values in the form
+		}
 		RequestDispatcher rd = request.getRequestDispatcher(responsePage);
 		rd.forward(request, response);
-		
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+		String responsePage = "/success.jsp";
+		try {
+			//TODO try to save data
+		} catch (Exception e) {
+			responsePage = "/error.jsp";
+		} finally {
+			RequestDispatcher rd = request.getRequestDispatcher(responsePage);
+			rd.forward(request, response);
+		}
 	}
 
 }
