@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename package &apos;model&apos; to &apos;sonny.raju.election.entities&apos;&#x0A;- Original project: &apos;SonnyRajuElectionEntities&apos;&#x0A;- Original element: &apos;SonnyRajuElectionEntities/src/model&apos;&#x0A;- Renamed element: &apos;SonnyRajuElectionEntities/src/sonny.raju.election.entities&apos;&#x0A;- Update references to refactored element&#x0A;- Update textual occurrences in comments and strings" description="Rename package &apos;model&apos;" flags="589830" hierarchical="false" id="org.eclipse.jdt.ui.rename.package" input="/src&lt;model" name="sonny.raju.election.entities" qualified="false" references="true" stamp="1384733471832" textual="false" version="1.0"/>
+</session>

@@ -1,0 +1,95 @@
+package election.web.model;
+
+import java.io.PrintStream;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.EntityTransaction;
+import javax.persistence.Query;
+
+import sonny.raju.election.entities.Candidate;
+import election.web.exceptions.ElectionException;
+
+public class Candidates {
+
+	private static List<String> candidateNames = null;
+	private static EntityManagerFactory emf = null;
+
+	public Candidates() {
+
+		if (emf == null) {
+			InitialContext ctx;
+			try {
+				ctx = new InitialContext();
+				emf = (EntityManagerFactory) ctx.lookup("java:/ElectionDS");
+			} catch (NamingException e) {
+				e.printStackTrace();
+			}
+
+		}
+	}
+
+	
+	public List<String> getCandidateNames() {
+	
+		if(candidateNames == null) {
+			EntityManager em = emf.createEntityManager();
+			Query q = em.createNamedQuery("Candidate.findAll");
+			List<Candidate> candidates = q.getResultList();
+			candidateNames = new ArrayList<String>();
+			for(Candidate candidate : candidates) {
+				candidateNames.add(candidate.getName());
+			}
+			em.close();
+		}
+		return candidateNames;
+	}
+
+	public int getVotes(String name) throws ElectionException {
+		
+		EntityManager em = emf.createEntityManager();
+		Candidate candidate = em.find(Candidate.class, getCandidateNames().indexOf(name) +1);
+		em.close();
+		
+		if(candidate == null) {
+			throw new ElectionException("Candidate name " + name + " not recognized");
+		}
+		return candidate.getVotes();
+		
+	}
+
+	public void voteFor(String name) throws ElectionException {
+		
+		EntityManager em = emf.createEntityManager();
+		Candidate candidate = em.find(Candidate.class, getCandidateNames().indexOf(name) +1);
+		if(candidate == null) {
+			throw new ElectionException("Candidate name " + name + " not recognized");
+		}
+		EntityTransaction et = em.getTransaction();
+		et.begin();
+		candidate.setVotes(candidate.getVotes() +1);
+		em.merge(candidate);
+		et.commit();
+		em.close();
+		
+	}
+
+	public void printVoteCount(PrintStream out) {
+		
+		out.print("Vote count so far: ");
+		EntityManager em = emf.createEntityManager();
+		Query q = em.createNamedQuery("Candidate.findAll");
+		List<Candidate> candidates = q.getResultList();
+		for(Candidate c : candidates) {
+			out.printf("[%-12s%4d]", c.getName(), c.getVotes());
+		}
+		out.println();
+		em.close();
+		
+	}
+
+}

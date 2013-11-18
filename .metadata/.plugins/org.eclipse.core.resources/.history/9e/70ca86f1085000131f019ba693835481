@@ -1,0 +1,39 @@
+package todo.model;
+
+import java.util.List;
+
+import todolist.entities.Task;
+
+public class Tasks {
+	
+	public void addTask(Task task) {
+		
+	}
+	
+	public void updateTask(Task task) {
+		
+	}
+	
+	public void deleteTask(int taskId) {
+		
+	}
+	
+	public List<Task> viewAllTasks(int userId) {
+		return null;
+	}
+	
+	public List<Task> viewPendingTasks(int userId) {
+		
+	}
+	
+	viewTasksByPriority(userId,priorityValue)
+	markAsDone(taskId)
+	viewTaskDetails(taskId)
+	startTask(taskId)
+	endTask(taskId)
+	getPendingTasksCount()
+	getTotalTasksCount()
+	getFinishedTasksCount()
+
+
+}

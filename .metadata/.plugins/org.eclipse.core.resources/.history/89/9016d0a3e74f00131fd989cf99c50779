@@ -1,0 +1,71 @@
+package election.web.model;
+
+import java.io.PrintStream;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
+import javax.persistence.EntityManagerFactory;
+
+import election.web.exceptions.ElectionException;
+
+public class Candidates {
+	
+	//private static Candidates candidates = null;
+	//Map <String, Integer> candidateNameVotes = null;
+	
+	private static List<String> candidateNames = null;
+	private static EntityManagerFactory emf = null;
+
+	private Candidates() {
+		
+		if(emf == null) {
+			InitialContext ctx;
+			try {
+				ctx = new InitialContext();
+				emf = (EntityManagerFactory) ctx.lookup("java:/ElectionEMF");
+			} catch (NamingException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+		}
+	}
+
+	/*
+	public static synchronized Candidates getInstance() {
+		if ( candidates == null ) {
+			candidates = new Candidates();
+		}
+		return candidates;
+	}
+	
+	public List<String> getCandidateNames() {
+		return new ArrayList<String> ( candidateNameVotes.keySet() );
+	}
+	*/
+	
+	public int getVotes( String name ) throws ElectionException {
+		if( candidateNameVotes.get( name ) == null ) {
+			throw new ElectionException("Candidate name " + name + " not regonized");
+		}
+		return candidateNameVotes.get( name );
+	}
+	
+	public void voteFor( String name ) throws ElectionException {
+		int votes = getVotes( name ) + 1;
+		candidateNameVotes.put( name , votes );		
+	}
+	
+	public void printVoteCount( PrintStream out ) {
+		out.print("Vote count so far: ");
+		for ( String s : getCandidateNames() ) {
+			out.printf("[%-12s%4d] ", s, candidateNameVotes.get(s) );
+		}
+		out.println();
+	}
+	
+}

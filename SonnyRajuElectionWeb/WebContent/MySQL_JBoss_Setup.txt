@@ -1,0 +1,92 @@
+-- To create the database
+----------------------
+-- You must do at least the following in MySQL Workbench
+
+CREATE DATABASE ELECTION;
+
+-- Do the following in either the MySQL Workbench or the Data development 
+-- perspective of Eclipse
+
+CREATE TABLE ELECTION.CANDIDATE (
+   CID INTEGER PRIMARY KEY AUTO_INCREMENT,
+   CNAME VARCHAR(30),
+   CVOTES INTEGER DEFAULT 0
+);
+
+INSERT INTO ELECTION.CANDIDATE (CNAME) VALUES ('Ju Wen Chen');
+INSERT INTO ELECTION.CANDIDATE (CNAME) VALUES ('Grace Semanio');
+INSERT INTO ELECTION.CANDIDATE (CNAME) VALUES ('Asif Khan');
+
+-- in Elcipse, sample data in the database created with the commands above
+
+SELECT * FROM ELECTION.CANDIDATE;
+
+
+-- To Add the datasource to JBoss
+-- First stop the server and then edit the conifguration file 
+-------------------------------------------------------------------------------------
+-- File: C:\JBoss-as-7.1.1.Final\standlone\configuration\standalone.xml
+-- Insert <datasource> stanza or modify existing to:
+--   Change STAFF to Election -- three changes
+--   Change <user-name> and <password> as required
+-- Do not change the following lines, just find them
+-----------------------------------------------------
+        <subsystem xmlns="urn:jboss:domain:datasources:1.0">
+            <datasources>
+                <datasource jndi-name="java:jboss/datasources/ExampleDS" pool-name="ExampleDS" enabled="true" use-java-context="true">
+                    <connection-url>jdbc:h2:mem:test;DB_CLOSE_DELAY=-1</connection-url>
+                    <driver>h2</driver>
+                    <security>
+                        <user-name>sa</user-name>
+                        <password>sa</password>
+                    </security>
+                </datasource>
+                <datasource jta="true" jndi-name="java:/StaffDS" pool-name="StaffPool" enabled="true" use-java-context="true" use-ccm="true">
+                    <connection-url>jdbc:mysql://localhost:3306/STAFF</connection-url>
+                    <driver>mysql</driver>
+                    <security>
+                        <user-name>user</user-name>
+                        <password>password</password>
+                    </security>
+-- insert here to define another data source ----------                
+                </datasource>
+                <datasource jta="true" jndi-name="java:/ElectionDS" pool-name="ElectionPool" enabled="true" use-java-context="true" use-ccm="true">
+                    <connection-url>jdbc:mysql://localhost:3306/ELECTION</connection-url>
+                    <driver>mysql</driver>
+                    <security>
+                        <user-name>user</user-name>
+                        <password>password</password>
+                    </security>
+                </datasource>
+-- end insert ------------------------------------------                
+                <drivers>
+                    <driver name="h2" module="com.h2database.h2">
+                        <xa-datasource-class>org.h2.jdbcx.JdbcDataSource</xa-datasource-class>
+                    </driver>
+                    <driver name="mysql" module="com.mysql"/>
+                </drivers>
+            </datasources>
+            
+
+-- To configure JPA in Eclipse
+-- First have an EAR project that contains your Web project. Add a JPA projec to your EAR project
+-- When you create a JPA project called ElectionEntities, persistence.xml is generated for you            
+---------------------------PERSISTENCE XML ----------------------------------------------------------
+-- insert lines as indicated and do not change prolog or closing lines
+
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
+	<persistence-unit name="ElectionEntities">
+-- modify the line above to read:	
+	<persistence-unit name="ElectionEntities" transaction-type="RESOURCE_LOCAL">	
+-- insert the following to specify data source and standard properties required by JBoss
+	   <provider>org.hibernate.ejb.HibernatePersistence</provider>
+       <jta-data-source>java:/ElectionDS</jta-data-source>
+	   <properties>
+           <property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect"/>
+           <property name="jboss.entity.manager.factory.jndi.name" value="java:/ElectionEMF"/>
+        </properties>	
+-- end insert -- so not modify the last two lines.
+	</persistence-unit>
+</persistence>
+ 
