@@ -35,16 +35,40 @@ public class UserServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+		HttpSession session = request.getSession();
+		Users user = new Users();
+		String responsePage = "/error.jsp";
 		
-		String responsePage = "/dashboard.jsp";
+		String useremail = request.getParameter("useremail");
+		String password = request.getParameter("password");
+
 		try {
-			//TODO check user credentials and if everything is ok then redirect to the dashboard
-		} catch (Exception e) {
-			responsePage = "/error.jsp";
+			if (useremail == null || useremail.isEmpty()) {
+				throw new UserNotFoundException("User Email is required");
+			} else if (password == null || password.isEmpty()) {
+				throw new UserNotFoundException("Password is required");
+			} else {
+				User loginUser = new User();
+				loginUser.setEmail(useremail);
+				loginUser.setPassword(password);
+				
+				if(! user.loginUser(loginUser)) {
+					throw new UserNotFoundException("Unable to authenticate the user");
+				} else {
+					// login success
+					responsePage = "/dashboard.jsp";
+					session.setAttribute("useremail", useremail);
+				}
+			}
+			
+		} catch (UserNotFoundException unf) {
+
 		} finally {
 			RequestDispatcher rd = request.getRequestDispatcher(responsePage);
 			rd.forward(request, response);
 		}
+		
 	}
 
 }
