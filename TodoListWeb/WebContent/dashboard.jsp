@@ -21,6 +21,7 @@
 <div class="container">
 
       <div class="page-header">
+      <span class="pull-right"><a href="login.jsp">Logout</a></span>
         <h1>Todo List Web</h1>
         <p class="lead">Here is your dashboard</p>
       </div>
