@@ -27,13 +27,13 @@
 		<div class="row col-md-4">
 			<form role="form" method="post" action=${pageContext.request.contextPath}/login>
 				<div class="form-group">
-					<label for="exampleInputEmail1">Email address</label> <input
-						type="email" class="form-control" id="exampleInputEmail1"
+					<label for="useremail">Email address</label> <input
+						type="email" class="form-control" id="useremail" name="useremail"
 						placeholder="Enter email">
 				</div>
 				<div class="form-group">
-					<label for="exampleInputPassword1">Password</label> <input
-						type="password" class="form-control" id="exampleInputPassword1"
+					<label for="password">Password</label> <input
+						type="password" class="form-control" id="password" name="password"
 						placeholder="Password">
 				</div>
 				<button type="submit" class="btn btn-primary">Sign In</button>
