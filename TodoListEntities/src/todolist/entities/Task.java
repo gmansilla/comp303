@@ -103,5 +103,12 @@ public class Task implements Serializable {
 	public void setUser(User user) {
 		this.user = user;
 	}
+	
+	public String toString() {
+		return "Task Name: " + this.name + ", Desc: " + this.description 
+				+ ", Priority: " + this.priority
+				+ ", Status: " + this.status + ", Due date: " + this.dueDate.toString() 
+				+ ", Created: " + this.created.toString();
+	}
 
 }

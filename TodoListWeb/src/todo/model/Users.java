@@ -1,8 +1,12 @@
 package todo.model;
 
+import java.util.List;
+
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
+import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.Query;
 
 import todolist.entities.User;
 
@@ -41,16 +45,16 @@ private static EntityManagerFactory emf = null;
 
 	}
 
-	public boolean loginUser(User user) {
+	public User loginUser(User user) {
 		
 		User userFromDB = getUser(user.getEmail());
 		if (userFromDB == null) {
-			return false;
+			return null;
 		}
 		if (userFromDB.getPassword().equals(user.getPassword())) {
-			return true;
+			return userFromDB;
 		}
-		return false;
+		return null;
 	}
 	
 	public boolean logoutUser(User user) {

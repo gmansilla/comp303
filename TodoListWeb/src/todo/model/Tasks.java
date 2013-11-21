@@ -4,7 +4,9 @@ import java.util.List;
 
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
+import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.EntityTransaction;
 
 import todolist.entities.Task;
 
@@ -26,8 +28,14 @@ public class Tasks {
 		}
 	}
 	
-	public void addTask(Task task) {
-		// not implemented
+	public boolean addTask(Task newtask) {
+		EntityManager em = emf.createEntityManager();
+		EntityTransaction et = em.getTransaction();
+		et.begin();
+		em.persist(newtask);
+		et.commit();
+		em.close();
+		return true;
 	}
 	
 	public void updateTask(Task task) {

@@ -20,6 +20,8 @@
 	<div class="container">
 
 		<div class="page-header">
+		<span class="pull-right"> ${sessionScope.useremail} <a
+				href="login.jsp">Logout</a></span>
 			<h1>Todo List Web</h1>
 			<p class="lead">Here are the details of your task</p>
 		</div>

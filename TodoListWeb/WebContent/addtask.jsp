@@ -20,66 +20,83 @@
 	<div class="container">
 
 		<div class="page-header">
-        <h1>Todo List Web</h1>
-      </div>
+		<span class="pull-right"> ${sessionScope.useremail} <a
+				href="login.jsp">Logout</a></span>
+			<h1>Todo List Web</h1>
+		</div>
 
-      <h3>Add/Edit Tasks</h3>
-      <p>You can <strong>add new tasks</strong> or <strong>edit existing tasks</strong> here.</p>
-      <div class="row">
+		<h3>Add/Edit Tasks</h3>
+		<p>
+			You can <strong>add new tasks</strong> or <strong>edit
+				existing tasks</strong> here.
+		</p>
+		<div class="row">
 
 
-		<form class="form-horizontal" role="form" method="post" action="${pageContext.request.contextPath}/tasks">
-			<div class="form-group">
-				<label for="inputName" class="col-sm-2 control-label">Task
-					Name</label>
-				<div class="col-sm-3">
-					<input type="text" class="form-control" id="inputName"
-						placeholder="Name">
+			<form class="form-horizontal" role="form" method="post"
+				action="${pageContext.request.contextPath}/tasks">
+				<div class="form-group">
+					<label for="taskName" class="col-sm-2 control-label">Task
+						Name</label>
+					<div class="col-sm-3">
+						<input type="text" class="form-control" name="taskName"
+							placeholder="Task Name">
+					</div>
 				</div>
-			</div>
 
-			<div class="form-group">
-				<label for="inputPriority" class="col-sm-2 control-label">Task
-					Priority</label>
-				<div class="col-sm-3">
-					<select class="form-control">
-						<option value="high">High</option>
-						<option value="medium">Medium</option>
-						<option value="low">Low</option>
-					</select>
+				<div class="form-group">
+					<label for="taskDesc" class="col-sm-2 control-label">Task
+						Name</label>
+					<div class="col-sm-3">
+						<textarea class="form-control" name="taskDesc"
+							placeholder="Task Description"></textarea>
+					</div>
 				</div>
-			</div>
 
-			<div class="form-group">
-				<label for="inputStatus" class="col-sm-2 control-label">Task
-					Status</label>
-				<div class="col-sm-3">
-					<select class="form-control">
-						<option value="started">Started</option>
-						<option value="notStarted">Not Started</option>
-						<option value="finished">Finished</option>
-					</select>
+				<div class="form-group">
+					<label for="taskPriority" class="col-sm-2 control-label">Task
+						Priority</label>
+					<div class="col-sm-3">
+						<select class="form-control" name="taskPriority">
+							<option value="h">High</option>
+							<option value="m">Medium</option>
+							<option value="l">Low</option>
+						</select>
+					</div>
 				</div>
-			</div>
 
-
-			<div class="form-group">
-				<label for="inputDate" class="col-sm-2 control-label">Due
-					Date</label>
-				<div class="col-sm-3">
-					<input type="date" class="form-control" id="inputDate"
-						placeholder="Date">
+				<div class="form-group">
+					<label for="taskStatus" class="col-sm-2 control-label">Task
+						Status</label>
+					<div class="col-sm-3">
+						<select class="form-control" name="taskStatus">
+							<option value="s">Started</option>
+							<option value="p">Not Started</option>
+							<option value="f">Finished</option>
+						</select>
+					</div>
 				</div>
-			</div>
 
-			<div class="form-group">
-				<div class="col-sm-offset-2 col-sm-10">
-					<button type="submit" class="btn btn-success">Save</button>
-					<button type="button" class="btn btn-danger" onclick="window.location.href='${pageContext.request.contextPath}/dashboard.jsp'">Cancel</button>
+
+				<div class="form-group">
+					<label for="inputDate" class="col-sm-2 control-label">Due
+						Date</label>
+					<div class="col-sm-3">
+						<input type="date" class="form-control" name="inputDate"
+							placeholder="Date">
+					</div>
 				</div>
-			</div>
 
-		</form>
+				<div class="form-group">
+					<div class="col-sm-offset-2 col-sm-10">
+						<button type="submit" class="btn btn-success" name="saveTask">Save</button>
+						<button type="button" class="btn btn-danger"
+							onclick="window.location.href='${pageContext.request.contextPath}/dashboard.jsp'">Cancel</button>
+					</div>
+				</div>
+
+			</form>
+		</div>
 	</div>
 </body>
 </html>

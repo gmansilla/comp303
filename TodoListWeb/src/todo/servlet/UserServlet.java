@@ -8,6 +8,11 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import todo.exception.UserNotFoundException;
+import todo.model.Users;
+import todolist.entities.User;
 
 /**
  * Servlet implementation class UserServlet
@@ -28,8 +33,10 @@ public class UserServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-	}
+		
+		RequestDispatcher rd = request.getRequestDispatcher("/login.jsp");
+		rd.forward(request, response);
+	}	
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
@@ -52,19 +59,22 @@ public class UserServlet extends HttpServlet {
 				User loginUser = new User();
 				loginUser.setEmail(useremail);
 				loginUser.setPassword(password);
-				
-				if(! user.loginUser(loginUser)) {
+				User loggedinUser = user.loginUser(loginUser);
+				if(loggedinUser == null) {
 					throw new UserNotFoundException("Unable to authenticate the user");
 				} else {
 					// login success
-					responsePage = "/dashboard.jsp";
-					session.setAttribute("useremail", useremail);
+					responsePage = "dashboard";
+					session.setAttribute("userId", loggedinUser.getId());
+					session.setAttribute("username", loggedinUser.getUsername());
+					session.setAttribute("useremail", loggedinUser.getEmail());
 				}
 			}
 			
 		} catch (UserNotFoundException unf) {
 
 		} finally {
+			System.out.println("Redirect to " + responsePage);
 			RequestDispatcher rd = request.getRequestDispatcher(responsePage);
 			rd.forward(request, response);
 		}
