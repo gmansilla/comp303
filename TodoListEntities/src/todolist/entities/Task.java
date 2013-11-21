@@ -1,7 +1,9 @@
 package todolist.entities;
 
 import java.io.Serializable;
+
 import javax.persistence.*;
+
 import java.util.Date;
 
 
@@ -11,7 +13,9 @@ import java.util.Date;
  */
 @Entity
 @Table(name="tasks")
-@NamedQuery(name="Task.findAll", query="SELECT t FROM Task t")
+@NamedQueries({
+	@NamedQuery(name="Task.findTasksByUserId", query="SELECT t FROM Task t where t.user.id = :userId")
+})
 public class Task implements Serializable {
 	private static final long serialVersionUID = 1L;
 

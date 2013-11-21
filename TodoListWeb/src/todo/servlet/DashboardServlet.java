@@ -1,6 +1,7 @@
 package todo.servlet;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -9,6 +10,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
+import todo.model.Tasks;
+import todolist.entities.Task;
 
 /**
  * Servlet implementation class DashboardServlet
@@ -29,11 +33,13 @@ public class DashboardServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
 
 		HttpSession session = request.getSession();
 		if(session.getAttribute("useremail") == null || session.getAttribute("useremail").equals("")) {
 			// if not logged in, redirect to login page
+			if (request.getParameter("logout") != null) {  
+				session.invalidate();
+			}
 			RequestDispatcher rd = request.getRequestDispatcher("login");
 			rd.forward(request, response);
 		} else {
@@ -57,6 +63,14 @@ public class DashboardServlet extends HttpServlet {
 			rd.forward(request, response);
 		} else {
 			// if logged in, show dashboard
+			
+			// fetch all the tasks
+			int userId = Integer.parseInt(session.getAttribute("userId").toString());
+			Tasks tasks = new Tasks();
+			List<Task> taskList = tasks.viewAllTasks(userId);
+			
+			// show the page
+			request.setAttribute("taskList", taskList);
 			RequestDispatcher rd = request.getRequestDispatcher("/dashboard.jsp");
 			rd.forward(request, response);
 		}
