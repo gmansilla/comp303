@@ -69,8 +69,12 @@
 							<c:if test="${task.status == 's'}">
 								<td>Started</td>
 							</c:if>
-							<td><a class="btn btn-link"
-								href="${pageContext.request.contextPath}/tasks?id=${task.id}">Edit</a></td>
+							<td>
+								<a class="btn btn-link"
+								href="${pageContext.request.contextPath}/tasks?id=${task.id}">Edit</a>
+								<a class="btn btn-link" name="taskFinish"
+								href="${pageContext.request.contextPath}/tasks?id=${task.id}&status=f">Finish</a>
+							</td>
 						</tr>
 					</c:forEach>
 				</tbody>
