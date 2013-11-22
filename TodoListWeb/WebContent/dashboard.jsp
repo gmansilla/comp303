@@ -24,13 +24,23 @@
 			<span class="pull-right">${sessionScope.useremail} <a
 				href="${pageContext.request.contextPath}/login" name="logout">Logout</a></span>
 			<h1>Todo List Web</h1>
-			<p class="lead">Welcome, ${sessionScope.username}. Here is your dashboard</p>
+
+			<p class="lead">Welcome, ${sessionScope.username}. Here is your
+				dashboard</p>
+
+		</div>
+		<div class="pull-right">
+			<form action="${pageContext.request.contextPath}/tasks" method="get">
+				<button type="submit" class="btn btn-primary">Add New Task</button>
+			</form>
 		</div>
 		<p>
-			You have a total 123 tasks <strong>there are 5 high priority
-				tasks overdue</strong>. Have a good day.
+			Total Created: <strong>${requestScope.totalTasks} tasks</strong>,
+			Finished: <strong>${requestScope.finishedTasks} tasks</strong>,
+			Pending: <strong>${requestScope.pendingTaskCount} tasks</strong>
+
 		</p>
-		<br >
+		<h3>Tasks yet to finish</h3>
 		<div class="row">
 			<table class="table table-hover">
 				<thead>
@@ -69,8 +79,7 @@
 							<c:if test="${task.status == 's'}">
 								<td>Started</td>
 							</c:if>
-							<td>
-								<a class="btn btn-link"
+							<td><a class="btn btn-link"
 								href="${pageContext.request.contextPath}/tasks?id=${task.id}">Edit</a>
 								<a class="btn btn-link" name="taskFinish"
 								href="${pageContext.request.contextPath}/tasks?id=${task.id}&status=f">Finish</a>
@@ -81,9 +90,34 @@
 			</table>
 		</div>
 		<hr>
-		<form action="${pageContext.request.contextPath}/tasks" method="get">
-			<button type="submit" class="btn btn-primary">Add Task</button>
-		</form>
+		
+		<h3>Tasks already finished</h3>
+		<div class="row">
+			<table class="table table-hover">
+				<thead>
+					<tr>
+						<th>#</th>
+						<th>Task Name</th>
+						<th>Description</th>
+						<th>Priority</th>
+						<th>Due Date</th>
+						<th>Task Status</th>
+						<th>Action</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>102</td>
+						<td>sample Task Name</td>
+						<td>sample Description</td>
+						<td>sample Priority</td>
+						<td>sample Due Date</td>
+						<td>sample Task Status</td>
+						<td>No Action</td>
+					</tr>
+			</table>
+		</div>
+
 	</div>
 
 </body>
