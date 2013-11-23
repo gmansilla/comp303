@@ -78,16 +78,12 @@ public class Tasks {
 		return null;
 	}
 
-	public void startTask(int taskId) {
-		// not implemented
-	}
-
-	public void endTask(int taskId) {
+	public void modifyStatus(int taskId, String status) {
 		Task task = getTask(taskId);
 		if (task == null) {
 			return;
 		}
-		task.setStatus("f");
+		task.setStatus(status);
 		EntityManager em = emf.createEntityManager();
 		EntityTransaction et = em.getTransaction();
 		et.begin();

@@ -35,7 +35,7 @@ public class DashboardServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-
+		System.out.println("doGet Dashboard Servlet ");
 		HttpSession session = request.getSession();
 		if (session.getAttribute("useremail") == null
 				|| session.getAttribute("useremail").equals("")) {
@@ -52,7 +52,7 @@ public class DashboardServlet extends HttpServlet {
 					.toString());
 			Tasks tasks = new Tasks();
 			List<Task> taskList = tasks.viewAllTasks(userId);
-
+			System.out.println("adding tasks list " + taskList.size());
 			// Get pending tasks
 			int pendingTasksCount = tasks.getPendingTasksCount(userId);
 			int totalTasks = tasks.getTotalTasksCount(userId);
@@ -76,7 +76,7 @@ public class DashboardServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-
+		System.out.println("doPost Dashboard Servlet ");
 		HttpSession session = request.getSession();
 		if (session.getAttribute("useremail") == null
 				|| session.getAttribute("useremail").equals("")) {

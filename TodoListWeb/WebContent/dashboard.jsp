@@ -80,11 +80,11 @@
 								<c:choose>
 									<c:when test="${task.status == 'p'}">
 										<a name="taskFinish"
-										href="${pageContext.request.contextPath}/tasks?id=${task.id}&status=s">Start</a>
+										href="${pageContext.request.contextPath}/tasks?id=${task.id}&status=s"> Start</a>
 									</c:when>
 									<c:when test="${task.status == 's'}">
 										<a name="taskFinish"
-										href="${pageContext.request.contextPath}/tasks?id=${task.id}&status=f">Finish</a>
+										href="${pageContext.request.contextPath}/tasks?id=${task.id}&status=f"> Finish</a>
 									</c:when>
 								</c:choose>
 							</td>

@@ -38,31 +38,31 @@ public class TodoServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		System.out.println("doGet Todo Servlet ");
 		String responsePage = "/addtask.jsp";
 		String id = request.getParameter("id"); //check if Edit action is being called. It doesn't matter we treat this as a string here.
 		String status = request.getParameter("status");
 		
-		if (id == null || status == null) {
+		if (id == null) {
 			RequestDispatcher rd = request.getRequestDispatcher(responsePage);
 			rd.forward(request, response);
 			return;
 		}
-		
-		Tasks tasks = new Tasks();
-		
-		if (status.equals("f")) { 
-			tasks.endTask(Integer.parseInt(id));
-			RequestDispatcher rd = request.getRequestDispatcher("/dashboard.jsp");
-			rd.forward(request, response);
-			return;
+		responsePage = "/dashboard.jsp";
+		if (status != null) {
+			Tasks task = new Tasks();
+			task.modifyStatus(Integer.parseInt(id), status);
 		}
+		
+		RequestDispatcher rd = request.getRequestDispatcher(responsePage);
+		rd.forward(request, response);
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+		System.out.println("doPost Todo Servlet ");
 		HttpSession session = request.getSession();
 		// read values from the form
 		String taskName = request.getParameter("taskName");
