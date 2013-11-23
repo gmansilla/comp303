@@ -15,7 +15,8 @@ import java.util.Date;
 @Table(name="tasks")
 @NamedQueries({
 	@NamedQuery(name="Task.findTasksByUserId", query="SELECT t FROM Task t where t.user.id = :userId"),
-	@NamedQuery(name="Task.findTaskById", query="SELECT t FROM Task t where t.id = :taskId")
+	@NamedQuery(name="Task.findTaskById", query="SELECT t FROM Task t where t.id = :taskId"),
+	@NamedQuery(name="Task.getPendingTasks", query="SELECT t FROM Task t where t.status != 'f'")
 })
 public class Task implements Serializable {
 	private static final long serialVersionUID = 1L;

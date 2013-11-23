@@ -92,6 +92,19 @@ public class Tasks {
 		em.close();
 	}
 
+	public List<Task> getPendingTasks() {
+		EntityManager em = emf.createEntityManager();
+		Query q = em.createNamedQuery("Task.getPendingTasks");
+		List<Task> taskList = q.getResultList();
+		tasks = new ArrayList<Task>();
+		for (Task t : taskList) {
+			tasks.add(t);
+		}
+		em.close();
+
+		return tasks;
+	}
+	
 	public int getPendingTasksCount(int userId) {
 		return 12;
 	}

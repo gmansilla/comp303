@@ -48,7 +48,7 @@ public class TodoServlet extends HttpServlet {
 			rd.forward(request, response);
 			return;
 		}
-		responsePage = "/dashboard.jsp";
+		responsePage = "dashboard";
 		if (status != null) {
 			Tasks task = new Tasks();
 			task.modifyStatus(Integer.parseInt(id), status);
