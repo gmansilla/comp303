@@ -110,7 +110,7 @@ public class Tasks {
 
 	public Task getTask(int taskId) {
 		EntityManager em = emf.createEntityManager();
-		Query q = em.createNamedQuery("Task.findTasksById");
+		Query q = em.createNamedQuery("Task.findTaskById");
 		q.setParameter("taskId", taskId);
 		List result = q.getResultList();
 		if (result.size() < 1) {

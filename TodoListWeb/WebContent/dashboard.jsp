@@ -40,7 +40,7 @@
 			Pending: <strong>${requestScope.pendingTaskCount} tasks</strong>
 
 		</p>
-		<h3>Tasks yet to finish</h3>
+		<h3>All Tasks</h3>
 		<div class="row">
 			<table class="table table-hover">
 				<thead>
@@ -60,29 +60,33 @@
 							<td>${task.id}</td>
 							<td>${task.name}</td>
 							<td>${task.description}</td>
-							<c:if test="${task.priority == 'l'}">
-								<td>Low</td>
-							</c:if>
-							<c:if test="${task.priority == 'm'}">
-								<td>Medium</td>
-							</c:if>
-							<c:if test="${task.priority == 'h'}">
-								<td>High</td>
-							</c:if>
+							<td>
+								<c:choose>
+									<c:when test="${task.priority == 'l'}">Low</c:when>
+									<c:when test="${task.priority == 'm'}">Medium</c:when>
+									<c:when test="${task.priority == 'h'}">High</c:when>
+								</c:choose>
+							</td>
 							<td>${task.dueDate}</td>
-							<c:if test="${task.status == 'p'}">
-								<td>Not Started</td>
-							</c:if>
-							<c:if test="${task.status == 'f'}">
-								<td>Finished</td>
-							</c:if>
-							<c:if test="${task.status == 's'}">
-								<td>Started</td>
-							</c:if>
-							<td><a class="btn btn-link"
-								href="${pageContext.request.contextPath}/tasks?id=${task.id}">Edit</a>
-								<a class="btn btn-link" name="taskFinish"
-								href="${pageContext.request.contextPath}/tasks?id=${task.id}&status=f">Finish</a>
+							<td>
+								<c:choose>
+									<c:when test="${task.status == 'p'}">Not Started</c:when>
+									<c:when test="${task.status == 's'}">Started</c:when>
+									<c:when test="${task.status == 'f'}">Finished</c:when>
+								</c:choose>
+							</td>
+							<td>
+								<a href="${pageContext.request.contextPath}/tasks?id=${task.id}">Edit</a>
+								<c:choose>
+									<c:when test="${task.status == 'p'}">
+										<a name="taskFinish"
+										href="${pageContext.request.contextPath}/tasks?id=${task.id}&status=s">Start</a>
+									</c:when>
+									<c:when test="${task.status == 's'}">
+										<a name="taskFinish"
+										href="${pageContext.request.contextPath}/tasks?id=${task.id}&status=f">Finish</a>
+									</c:when>
+								</c:choose>
 							</td>
 						</tr>
 					</c:forEach>

@@ -40,19 +40,22 @@ public class TodoServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String responsePage = "/addtask.jsp";
 		String id = request.getParameter("id"); //check if Edit action is being called. It doesn't matter we treat this as a string here.
-		if (id != null) {
-			//TODO get the current data assigned to that Task and load the values in the form
-			if (request.getParameter("status") != null) { 
-				Tasks tasks = new Tasks();
-				tasks.endTask(Integer.parseInt(id));
-				RequestDispatcher rd = request.getRequestDispatcher("dashboard");
-				rd.forward(request, response);
-				return;
-			}
-		} 
+		String status = request.getParameter("status");
 		
-		RequestDispatcher rd = request.getRequestDispatcher(responsePage);
-		rd.forward(request, response);
+		if (id == null || status == null) {
+			RequestDispatcher rd = request.getRequestDispatcher(responsePage);
+			rd.forward(request, response);
+			return;
+		}
+		
+		Tasks tasks = new Tasks();
+		
+		if (status.equals("f")) { 
+			tasks.endTask(Integer.parseInt(id));
+			RequestDispatcher rd = request.getRequestDispatcher("/dashboard.jsp");
+			rd.forward(request, response);
+			return;
+		}
 	}
 
 	/**
