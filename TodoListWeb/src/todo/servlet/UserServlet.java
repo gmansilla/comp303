@@ -60,15 +60,15 @@ public class UserServlet extends HttpServlet {
 				loginUser.setEmail(useremail);
 				loginUser.setPassword(password);
 				User loggedinUser = user.loginUser(loginUser);
-				if(loggedinUser == null) {
+				if (loggedinUser == null) {
 					throw new UserNotFoundException("Unable to authenticate the user");
-				} else {
-					// login success
-					responsePage = "dashboard";
-					session.setAttribute("userId", loggedinUser.getId());
-					session.setAttribute("username", loggedinUser.getUsername());
-					session.setAttribute("useremail", loggedinUser.getEmail());
-				}
+				} 
+				// login success
+				responsePage = "dashboard";
+				session.setAttribute("userId", loggedinUser.getId());
+				session.setAttribute("username", loggedinUser.getUsername());
+				session.setAttribute("useremail", loggedinUser.getEmail());
+				
 			}
 			
 		} catch (UserNotFoundException unf) {

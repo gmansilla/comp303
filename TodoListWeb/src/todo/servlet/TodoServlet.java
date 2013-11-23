@@ -88,7 +88,7 @@ public class TodoServlet extends HttpServlet {
 		System.out.println(newTask);
 		
 		Tasks tasks = new Tasks();
-		if(tasks.addTask(newTask)) {
+		if (tasks.addTask(newTask)) {
 			RequestDispatcher rd = request.getRequestDispatcher("dashboard");
 			rd.forward(request, response);
 		}

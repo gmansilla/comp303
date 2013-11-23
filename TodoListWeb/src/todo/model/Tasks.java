@@ -74,10 +74,6 @@ public class Tasks {
 		return null;
 	}
 
-	public void markAsDone(int taskId) {
-		// not implemented
-	}
-
 	public Task viewTaskDetails(int taskId) {
 		return null;
 	}
@@ -87,7 +83,17 @@ public class Tasks {
 	}
 
 	public void endTask(int taskId) {
-		// not implemented
+		Task task = getTask(taskId);
+		if (task == null) {
+			return;
+		}
+		task.setStatus("f");
+		EntityManager em = emf.createEntityManager();
+		EntityTransaction et = em.getTransaction();
+		et.begin();
+		em.merge(task);
+		et.commit();
+		em.close();
 	}
 
 	public int getPendingTasksCount(int userId) {
@@ -102,4 +108,15 @@ public class Tasks {
 		return 0;
 	}
 
+	public Task getTask(int taskId) {
+		EntityManager em = emf.createEntityManager();
+		Query q = em.createNamedQuery("Task.findTasksById");
+		q.setParameter("taskId", taskId);
+		List result = q.getResultList();
+		if (result.size() < 1) {
+			return null;
+		}
+		Task task = (Task)q.getResultList().get(0);
+		return task;
+	}
 }
