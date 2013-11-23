@@ -91,7 +91,7 @@
 					<div class="col-sm-offset-2 col-sm-10">
 						<button type="submit" class="btn btn-success" name="saveTask">Save</button>
 						<button type="button" class="btn btn-danger"
-							onclick="window.location.href='${pageContext.request.contextPath}/dashboard.jsp'">Cancel</button>
+							onclick="window.location.href='${pageContext.request.contextPath}/dashboard'">Cancel</button>
 					</div>
 				</div>
 

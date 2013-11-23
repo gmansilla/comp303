@@ -22,7 +22,7 @@
 
 		<div class="page-header">
 			<span class="pull-right">${sessionScope.useremail} <a
-				href="${pageContext.request.contextPath}/login" name="logout">Logout</a></span>
+				href="${pageContext.request.contextPath}/login?logout=true" name="logout">Logout</a></span>
 			<h1>Todo List Web</h1>
 
 			<p class="lead">Welcome, ${sessionScope.username}. Here is your

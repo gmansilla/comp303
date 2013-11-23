@@ -33,7 +33,14 @@ public class UserServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+		
+		HttpSession session = request.getSession();
+		if (request.getParameter("logout") != null) {
+			session.removeAttribute("userId");
+			session.removeAttribute("username");
+			session.removeAttribute("useremail");
+			session.invalidate();
+		}
 		RequestDispatcher rd = request.getRequestDispatcher("/login.jsp");
 		rd.forward(request, response);
 	}	
