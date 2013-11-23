@@ -97,15 +97,15 @@ public class Tasks {
 	}
 
 	public int getPendingTasksCount(int userId) {
-		return 0;
+		return 12;
 	}
 
 	public int getTotalTasksCount(int userId) {
-		return 0;
+		return 100;
 	}
 
 	public int getFinishedTasksCount(int userId) {
-		return 0;
+		return 88;
 	}
 
 	public Task getTask(int taskId) {
