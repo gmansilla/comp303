@@ -24,7 +24,7 @@
 		<div class="bs-docs-section">
 			<div class="bs-callout bs-callout-danger">
       			<h4>Something went terribly wrong and the world is going to end! :-(</h4>
-      			<p>Click <a href="${pageContext.request.contextPath}/dashboard.jsp">here</a> to return to the dashboard.</p>
+      			<p>Click <a href="${pageContext.request.contextPath}/dashboard">here</a> to return to the dashboard.</p>
     		</div>
     	</div>
 	</div>

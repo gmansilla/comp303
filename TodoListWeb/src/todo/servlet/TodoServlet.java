@@ -44,9 +44,24 @@ public class TodoServlet extends HttpServlet {
 		String status = request.getParameter("status");
 		
 		if (id == null) {
+			// add new task
 			RequestDispatcher rd = request.getRequestDispatcher(responsePage);
 			rd.forward(request, response);
 			return;
+		} else {
+			
+			if(id != null && status == null) {
+				// write code to edit task whose id = :id
+				// get task details
+				// pass it to the addtask.jsp
+				
+			} else if ( id != null && status != null) {
+				// change status of that task
+				responsePage = "dashboard";
+				Tasks task = new Tasks();
+				task.modifyStatus(Integer.parseInt(id), status);
+			}
+			
 		}
 		responsePage = "dashboard";
 		if (status != null) {

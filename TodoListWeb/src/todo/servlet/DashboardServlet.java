@@ -40,9 +40,7 @@ public class DashboardServlet extends HttpServlet {
 		if (session.getAttribute("useremail") == null
 				|| session.getAttribute("useremail").equals("")) {
 			// if not logged in, redirect to login page
-			if (request.getParameter("logout") != null) {
-				session.invalidate();
-			}
+			
 			RequestDispatcher rd = request.getRequestDispatcher("login");
 			rd.forward(request, response);
 		} else {
