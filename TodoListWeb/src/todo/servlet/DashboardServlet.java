@@ -44,26 +44,8 @@ public class DashboardServlet extends HttpServlet {
 			RequestDispatcher rd = request.getRequestDispatcher("login");
 			rd.forward(request, response);
 		} else {
-			// if logged in, show dashboard
-			// fetch all the tasks
-			int userId = Integer.parseInt(session.getAttribute("userId")
-					.toString());
-			Tasks tasks = new Tasks();
-			List<Task> taskList = tasks.viewAllTasks(userId);
-			System.out.println("adding tasks list " + taskList.size());
-			// Get pending tasks
-			int pendingTasksCount = tasks.getPendingTasksCount(userId);
-			int totalTasks = tasks.getTotalTasksCount(userId);
-			int finishedTasks = tasks.getFinishedTasksCount(userId);
-
-			// show the page
-			request.setAttribute("taskList", taskList);
-			request.setAttribute("pendingTaskCount", pendingTasksCount);
-			request.setAttribute("totalTasks", totalTasks);
-			request.setAttribute("finishedTasks", finishedTasks);
-			RequestDispatcher rd = request
-					.getRequestDispatcher("/dashboard.jsp");
-			rd.forward(request, response);
+			loadDashboard(request, response, Integer.parseInt(session.getAttribute("userId")
+					.toString()));
 		}
 
 	}
@@ -82,28 +64,33 @@ public class DashboardServlet extends HttpServlet {
 			RequestDispatcher rd = request.getRequestDispatcher("login");
 			rd.forward(request, response);
 		} else {
-			// if logged in, show dashboard
-
-			// fetch all the tasks
-			int userId = Integer.parseInt(session.getAttribute("userId")
-					.toString());
-			Tasks tasks = new Tasks();
-			List<Task> taskList = tasks.viewAllTasks(userId);
-
-			// Get pending tasks
-			int pendingTasksCount = tasks.getPendingTasksCount(userId);
-			int totalTasks = tasks.getTotalTasksCount(userId);
-			int finishedTasks = tasks.getFinishedTasksCount(userId);
-
-			// show the page
-			request.setAttribute("taskList", taskList);
-			request.setAttribute("pendingTaskCount", pendingTasksCount);
-			request.setAttribute("totalTasks", totalTasks);
-			request.setAttribute("finishedTasks", finishedTasks);
-			RequestDispatcher rd = request
-					.getRequestDispatcher("/dashboard.jsp");
-			rd.forward(request, response);
+			loadDashboard(request, response, Integer.parseInt(session.getAttribute("userId")
+					.toString()));
 		}
+	}
+	
+	private void loadDashboard(HttpServletRequest request, HttpServletResponse response, Integer userId) throws ServletException, IOException {
+		if (userId == null) {
+			return;
+		}
+		Tasks tasks = new Tasks();
+		List<Task> taskList = tasks.viewAllTasks(userId); //all tasks
+		List<Task> tasksPending = tasks.getPendingTasks(); //all pending tasks
+		
+		// Get pending tasks
+		int pendingTasksCount = tasksPending.size();
+		int totalTasksCount = tasks.getTotalTasksCount(userId);
+		int finishedTasksCount = tasks.getFinishedTasksCount(userId);
+
+		// show the page
+		request.setAttribute("taskList", taskList);
+		request.setAttribute("pendingTasksCount", pendingTasksCount);
+		request.setAttribute("totalTasks", totalTasksCount);
+		request.setAttribute("finishedTasks", finishedTasksCount);
+		RequestDispatcher rd = request
+				.getRequestDispatcher("/dashboard.jsp");
+		rd.forward(request, response);
+		
 	}
 
 }

@@ -66,7 +66,6 @@ public class TodoServlet extends HttpServlet {
 			task.modifyStatus(Integer.parseInt(id), status);
 
 		}
-
 		RequestDispatcher rd = request.getRequestDispatcher(responsePage);
 		rd.forward(request, response);
 	}

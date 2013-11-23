@@ -29,9 +29,9 @@
 			</form>
 		</div>
 		<p>
-			Total Created: <strong>${requestScope.totalTasks} tasks</strong>,
-			Finished: <strong>${requestScope.finishedTasks} tasks</strong>,
-			Pending: <strong>${requestScope.pendingTaskCount} tasks</strong>
+			Total Created: <strong>${requestScope.totalTasksCount} tasks</strong>,
+			Finished: <strong>${requestScope.finishedTasksCount} tasks</strong>,
+			Pending: <strong>${requestScope.pendingTasksCount} tasks</strong>
 
 		</p>
 		<h3>All Tasks</h3>
