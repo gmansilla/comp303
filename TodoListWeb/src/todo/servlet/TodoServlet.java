@@ -39,7 +39,6 @@ public class TodoServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-		System.out.println("doGet Todo Servlet ");
 		String responsePage = "/addtask.jsp";
 		String id = request.getParameter("id"); // check if Edit action is being
 												// called. It doesn't matter we
@@ -58,7 +57,7 @@ public class TodoServlet extends HttpServlet {
 			// edit task page
 			int taskId = Integer.parseInt(id);
 			Tasks tasks = new Tasks();
-			Task task = tasks.viewTaskDetails(taskId);
+			Task task = tasks.getTask(taskId);
 			String newstring = new SimpleDateFormat("yyyy-MM-dd").format(task.getDueDate());
 			request.setAttribute("dt", newstring);
 			request.setAttribute("task", task);
@@ -89,7 +88,6 @@ public class TodoServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-		System.out.println("doPost Todo Servlet ");
 		HttpSession session = request.getSession();
 		// read values from the form
 		String taskId = request.getParameter("taskId");

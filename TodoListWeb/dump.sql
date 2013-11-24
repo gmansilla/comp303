@@ -51,7 +51,7 @@ CREATE TABLE `users` (
 --  Records of `users`
 -- ----------------------------
 BEGIN;
-INSERT INTO `users` VALUES ('1', 'gmansilla', 'mansillag@gmail.com', '15bc85b25e440729e665d1af560424033d03170a'), ('2', 'rverma', 'rubyverma2080@gmail.com', '15bc85b25e440729e665d1af560424033d03170a'), ('3', 'sraju', 'sonnykr@gmail.com', '15bc85b25e440729e665d1af560424033d03170a');
+INSERT INTO `users` VALUES ('1', 'gmansilla', 'mansillag@gmail.com', '476e251cc54b60534f68d0f614fcc67950151353'), ('2', 'rverma', 'rubyverma2080@gmail.com', '476e251cc54b60534f68d0f614fcc67950151353'), ('3', 'sraju', 'sonnykr@gmail.com', '476e251cc54b60534f68d0f614fcc67950151353');
 COMMIT;
 
 SET FOREIGN_KEY_CHECKS = 1;
