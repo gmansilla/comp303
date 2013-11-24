@@ -55,6 +55,7 @@ public class TodoServlet extends HttpServlet {
 			rd.forward(request, response);
 			return;
 		} else if (status == null) {
+			// edit task page
 			int taskId = Integer.parseInt(id);
 			Tasks tasks = new Tasks();
 			Task task = tasks.viewTaskDetails(taskId);
@@ -64,6 +65,12 @@ public class TodoServlet extends HttpServlet {
 			RequestDispatcher rd = request.getRequestDispatcher(responsePage);
 			rd.forward(request, response);
 			return;
+		} else if (status.equals("d")) {
+			// delete task
+			int taskId = Integer.parseInt(id);
+			Tasks tasks = new Tasks();
+			tasks.deleteTask(taskId);
+			responsePage = "dashboard";
 		} else {
 			// => id!=null and status!=null
 			// change status of that task
