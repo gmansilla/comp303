@@ -25,77 +25,90 @@ import todolist.entities.User;
 @WebServlet("/tasks")
 public class TodoServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public TodoServlet() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
 
 	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#HttpServlet()
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	public TodoServlet() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
+	 *      response)
+	 */
+	protected void doGet(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
 		System.out.println("doGet Todo Servlet ");
 		String responsePage = "/addtask.jsp";
-		String id = request.getParameter("id"); //check if Edit action is being called. It doesn't matter we treat this as a string here.
+		String id = request.getParameter("id"); // check if Edit action is being
+												// called. It doesn't matter we
+												// treat this as a string here.
 		String status = request.getParameter("status");
+		Date dt = new Date();
 		
 		if (id == null) {
 			// add new task
+			String newstring = new SimpleDateFormat("yyyy-MM-dd").format(dt);
+			request.setAttribute("dt", newstring);
 			RequestDispatcher rd = request.getRequestDispatcher(responsePage);
 			rd.forward(request, response);
 			return;
+		} else if (status == null) {
+			int taskId = Integer.parseInt(id);
+			Tasks tasks = new Tasks();
+			Task task = tasks.viewTaskDetails(taskId);
+			String newstring = new SimpleDateFormat("yyyy-MM-dd").format(task.getDueDate());
+			request.setAttribute("dt", newstring);
+			request.setAttribute("task", task);
+			RequestDispatcher rd = request.getRequestDispatcher(responsePage);
+			rd.forward(request, response);
+			return;
+
 		} else {
-			
-			if(id != null && status == null) {
-				// write code to edit task whose id = :id
-				// get task details
-				// pass it to the addtask.jsp
-				
-			} else if ( id != null && status != null) {
-				// change status of that task
-				responsePage = "dashboard";
-				Tasks task = new Tasks();
-				task.modifyStatus(Integer.parseInt(id), status);
-			}
-			
+			// => id!=null and status!=null
+			// change status of that task
+			responsePage = "dashboard";
+			Tasks task = new Tasks();
+			task.modifyStatus(Integer.parseInt(id), status);
+
 		}
-		
 		RequestDispatcher rd = request.getRequestDispatcher(responsePage);
 		rd.forward(request, response);
 	}
 
 	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
+	 *      response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
 		System.out.println("doPost Todo Servlet ");
 		HttpSession session = request.getSession();
 		// read values from the form
+		String taskId = request.getParameter("taskId");
 		String taskName = request.getParameter("taskName");
 		String taskDesc = request.getParameter("taskDesc");
 		String priority = request.getParameter("taskPriority");
 		String status = request.getParameter("taskStatus");
 		String taskDate = request.getParameter("inputDate");
-		
+
 		// convert string to date object
 		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 		Date dueDate = null;
 		try {
 			dueDate = dateFormat.parse(taskDate);
 		} catch (ParseException e) {
-		 	System.out.println(e.getMessage());
-			
+			System.out.println(e.getMessage());
+
 		}
-		
+
 		Date dateCreated = new Date();
-		
+
 		User u = new User();
 		u.setId(Integer.parseInt(session.getAttribute("userId").toString()));
-		
+
 		// create task object
 		Task newTask = new Task();
 		newTask.setName(taskName);
@@ -106,12 +119,23 @@ public class TodoServlet extends HttpServlet {
 		newTask.setCreated(dateCreated);
 		newTask.setDueDate(dueDate);
 		System.out.println(newTask);
-		
+
 		Tasks tasks = new Tasks();
-		if (tasks.addTask(newTask)) {
-			RequestDispatcher rd = request.getRequestDispatcher("dashboard");
-			rd.forward(request, response);
+		if(taskId == null || taskId.equalsIgnoreCase("")) {
+			if (tasks.addTask(newTask)) {
+				RequestDispatcher rd = request.getRequestDispatcher("dashboard");
+				rd.forward(request, response);
+			}			
+			// if taskId is not there add
+		} else {
+			// if taskId is there update
+			newTask.setId(Integer.parseInt(taskId));
+			if (tasks.updateTask(newTask)) {
+				RequestDispatcher rd = request.getRequestDispatcher("dashboard");
+				rd.forward(request, response);
+			}
 		}
+
 	}
 
 }

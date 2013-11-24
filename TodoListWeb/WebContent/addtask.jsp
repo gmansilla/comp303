@@ -1,5 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@page import="todolist.entities.Task"%>
+<%@page import="java.text.SimpleDateFormat"%>
+<%@page import="java.util.Date"%>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -35,21 +40,23 @@
 
 			<form class="form-horizontal" role="form" method="post"
 				action="${pageContext.request.contextPath}/tasks">
+				
+				<input type="hidden" value="${requestScope.task.id}" name="taskId"/>
 				<div class="form-group">
 					<label for="taskName" class="col-sm-2 control-label">Task
 						Name</label>
 					<div class="col-sm-3">
 						<input type="text" class="form-control" name="taskName"
-							placeholder="Task Name">
+							placeholder="Task Name" value="${requestScope.task.name}" >
 					</div>
 				</div>
 
 				<div class="form-group">
 					<label for="taskDesc" class="col-sm-2 control-label">Task
-						Name</label>
+						Description</label>
 					<div class="col-sm-3">
 						<textarea class="form-control" name="taskDesc"
-							placeholder="Task Description"></textarea>
+							placeholder="Task Description">${requestScope.task.description}</textarea>
 					</div>
 				</div>
 
@@ -58,9 +65,17 @@
 						Priority</label>
 					<div class="col-sm-3">
 						<select class="form-control" name="taskPriority">
-							<option value="h">High</option>
-							<option value="m">Medium</option>
-							<option value="l">Low</option>
+						<option value='h'
+							<c:if test="${requestScope.task.priority == 'h'}">selected='selected'</c:if>
+						>High</option>
+
+						<option value='m'
+							<c:if test="${requestScope.task.priority == 'm'}">selected='selected'</c:if>
+						>Medium</option>
+						
+						<option value='l'
+							<c:if test="${requestScope.task.priority == 'l'}">selected='selected'</c:if>
+						>Low</option>												
 						</select>
 					</div>
 				</div>
@@ -70,9 +85,17 @@
 						Status</label>
 					<div class="col-sm-3">
 						<select class="form-control" name="taskStatus">
-							<option value="s">Started</option>
-							<option value="p">Not Started</option>
-							<option value="f">Finished</option>
+						<option value='s'
+							<c:if test="${requestScope.task.status == 's'}">selected='selected'</c:if>
+						>Started</option>
+
+						<option value='p'
+							<c:if test="${requestScope.task.status == 'p'}">selected='selected'</c:if>
+						>Pending</option>
+						
+						<option value='f'
+							<c:if test="${requestScope.task.status == 'f'}">selected='selected'</c:if>
+						>Finished</option>
 						</select>
 					</div>
 				</div>
@@ -82,8 +105,9 @@
 					<label for="inputDate" class="col-sm-2 control-label">Due
 						Date</label>
 					<div class="col-sm-3">
-						<input type="date" class="form-control" name="inputDate"
-							placeholder="Date">
+					<input type='date' class='form-control' name='inputDate' placeholder='Date' value='${dt}'>
+					
+						 
 					</div>
 				</div>
 

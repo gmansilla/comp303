@@ -43,8 +43,14 @@ public class Tasks {
 		return true;
 	}
 
-	public void updateTask(Task task) {
-		// not implemented
+	public boolean updateTask(Task task) {
+		EntityManager em = emf.createEntityManager();
+		EntityTransaction et = em.getTransaction();
+		et.begin();
+		em.merge(task);
+		et.commit();
+		em.close();
+		return true;
 	}
 
 	public void deleteTask(int taskId) {
@@ -75,7 +81,16 @@ public class Tasks {
 	}
 
 	public Task viewTaskDetails(int taskId) {
-		return null;
+		Task task = null;
+		EntityManager em = emf.createEntityManager();
+		Query q = em.createNamedQuery("Task.findTaskById");
+		q.setParameter("taskId", taskId);
+		List<Task> tasks = q.getResultList();
+		for(Task t : tasks){
+			task = t;
+		}
+		em.close();
+		return task;
 	}
 
 	public void modifyStatus(int taskId, String status) {
