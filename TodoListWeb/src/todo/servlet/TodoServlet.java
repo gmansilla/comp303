@@ -45,18 +45,25 @@ public class TodoServlet extends HttpServlet {
 												// called. It doesn't matter we
 												// treat this as a string here.
 		String status = request.getParameter("status");
-
+		Date dt = new Date();
+		
 		if (id == null) {
 			// add new task
+			String newstring = new SimpleDateFormat("yyyy-MM-dd").format(dt);
+			request.setAttribute("dt", newstring);
 			RequestDispatcher rd = request.getRequestDispatcher(responsePage);
 			rd.forward(request, response);
 			return;
 		} else if (status == null) {
-			// => id!=null and no status
-			// write code to edit task whose id = :id
-			// get task details
-			// pass it to the addtask.jsp
-
+			int taskId = Integer.parseInt(id);
+			Tasks tasks = new Tasks();
+			Task task = tasks.viewTaskDetails(taskId);
+			String newstring = new SimpleDateFormat("yyyy-MM-dd").format(task.getDueDate());
+			request.setAttribute("dt", newstring);
+			request.setAttribute("task", task);
+			RequestDispatcher rd = request.getRequestDispatcher(responsePage);
+			rd.forward(request, response);
+			return;
 		} else {
 			// => id!=null and status!=null
 			// change status of that task
@@ -78,6 +85,7 @@ public class TodoServlet extends HttpServlet {
 		System.out.println("doPost Todo Servlet ");
 		HttpSession session = request.getSession();
 		// read values from the form
+		String taskId = request.getParameter("taskId");
 		String taskName = request.getParameter("taskName");
 		String taskDesc = request.getParameter("taskDesc");
 		String priority = request.getParameter("taskPriority");
@@ -111,10 +119,21 @@ public class TodoServlet extends HttpServlet {
 		System.out.println(newTask);
 
 		Tasks tasks = new Tasks();
-		if (tasks.addTask(newTask)) {
-			RequestDispatcher rd = request.getRequestDispatcher("dashboard");
-			rd.forward(request, response);
+		if(taskId == null || taskId.equalsIgnoreCase("")) {
+			if (tasks.addTask(newTask)) {
+				RequestDispatcher rd = request.getRequestDispatcher("dashboard");
+				rd.forward(request, response);
+			}			
+			// if taskId is not there add
+		} else {
+			// if taskId is there update
+			newTask.setId(Integer.parseInt(taskId));
+			if (tasks.updateTask(newTask)) {
+				RequestDispatcher rd = request.getRequestDispatcher("dashboard");
+				rd.forward(request, response);
+			}
 		}
+
 	}
 
 }
