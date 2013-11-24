@@ -51,21 +51,6 @@ public class Tasks {
 		// not implemented
 	}
 
-	public List<Task> viewAllTasks(int userId) {
-		
-		EntityManager em = emf.createEntityManager();
-		Query q = em.createNamedQuery("Task.findTasksByUserId");
-		q.setParameter("userId", userId);
-		List<Task> taskList = q.getResultList();
-		tasks = new ArrayList<Task>();
-		for (Task t : taskList) {
-			tasks.add(t);
-		}
-		em.close();
-
-		return tasks;
-	}
-
 	public List<Task> viewPendingTasks(int userId) {
 		return null;
 	}
@@ -92,31 +77,26 @@ public class Tasks {
 		em.close();
 	}
 
-	public List<Task> getPendingTasks() {
+	public List<Task> getTasksByStatus(int userId, String status) {
 		EntityManager em = emf.createEntityManager();
-		Query q = em.createNamedQuery("Task.getPendingTasks");
+		Query q = null;
+		if (status.equals("all")) {
+			q = em.createNamedQuery("Task.findTasksByUserId");
+		} else if (status.equals("finished")) {
+			q = em.createNamedQuery("Task.getFinishedTasksByUserId");
+		} else if (status.equals("pending")) {
+			q = em.createNamedQuery("Task.getPendingTasksByUserId");
+		}
+		q.setParameter("userId", userId);
 		List<Task> taskList = q.getResultList();
 		tasks = new ArrayList<Task>();
 		for (Task t : taskList) {
 			tasks.add(t);
 		}
 		em.close();
-
 		return tasks;
 	}
 	
-	public int getPendingTasksCount(int userId) {
-		return 12;
-	}
-
-	public int getTotalTasksCount(int userId) {
-		return 100;
-	}
-
-	public int getFinishedTasksCount(int userId) {
-		return 88;
-	}
-
 	public Task getTask(int taskId) {
 		EntityManager em = emf.createEntityManager();
 		Query q = em.createNamedQuery("Task.findTaskById");

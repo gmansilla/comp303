@@ -29,7 +29,7 @@
 			</form>
 		</div>
 		<p>
-			Total Created: <strong>${requestScope.totalTasksCount} tasks</strong>,
+			Total Tasks: <strong>${requestScope.totalTasksCount} tasks</strong>,
 			Finished: <strong>${requestScope.finishedTasksCount} tasks</strong>,
 			Pending: <strong>${requestScope.pendingTasksCount} tasks</strong>
 

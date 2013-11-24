@@ -74,19 +74,20 @@ public class DashboardServlet extends HttpServlet {
 			return;
 		}
 		Tasks tasks = new Tasks();
-		List<Task> taskList = tasks.viewAllTasks(userId); //all tasks
-		List<Task> tasksPending = tasks.getPendingTasks(); //all pending tasks
+		List<Task> taskList = tasks.getTasksByStatus(userId, "all"); //all tasks
+		List<Task> tasksPending = tasks.getTasksByStatus(userId, "pending"); //all pending tasks
+		List<Task> tasksFinished = tasks.getTasksByStatus(userId, "finished"); //all pending tasks
 		
 		// Get pending tasks
 		int pendingTasksCount = tasksPending.size();
-		int totalTasksCount = tasks.getTotalTasksCount(userId);
-		int finishedTasksCount = tasks.getFinishedTasksCount(userId);
+		int totalTasksCount = taskList.size();
+		int finishedTasksCount = tasksFinished.size();
 
 		// show the page
 		request.setAttribute("taskList", taskList);
 		request.setAttribute("pendingTasksCount", pendingTasksCount);
-		request.setAttribute("totalTasks", totalTasksCount);
-		request.setAttribute("finishedTasks", finishedTasksCount);
+		request.setAttribute("totalTasksCount", totalTasksCount);
+		request.setAttribute("finishedTasksCount", finishedTasksCount);
 		RequestDispatcher rd = request
 				.getRequestDispatcher("/dashboard.jsp");
 		rd.forward(request, response);
