@@ -65,7 +65,6 @@ public class TodoServlet extends HttpServlet {
 			RequestDispatcher rd = request.getRequestDispatcher(responsePage);
 			rd.forward(request, response);
 			return;
-
 		} else {
 			// => id!=null and status!=null
 			// change status of that task
