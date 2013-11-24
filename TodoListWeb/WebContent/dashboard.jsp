@@ -34,7 +34,7 @@
 			Pending: <strong>${requestScope.pendingTasksCount} tasks</strong>
 
 		</p>
-		<h3>All Tasks</h3>
+		<h3>Pending Tasks</h3>
 		<table class="table table-bordered">
 			<thead>
 				<tr>
@@ -84,7 +84,7 @@
 				</c:forEach>
 			</tbody>
 		</table>
-		
+		<br />
 		<h3>Tasks already finished</h3>
 		<table class="table table-bordered">
 			<thead>
@@ -94,18 +94,26 @@
 					<th>Priority</th>
 					<th>Due Date</th>
 					<th>Task Status</th>
-					<th>Action</th>
 				</tr>
 			</thead>
 			<tbody>
-				<tr>
-					<td>sample Task Name</td>
-					<td>sample Description</td>
-					<td>sample Priority</td>
-					<td>sample Due Date</td>
-					<td>sample Task Status</td>
-					<td>No Action</td>
-				</tr>
+				<c:forEach items="${requestScope.tasksFinished}" var="task">
+					<tr class="<c:if test="${task.priority == 'h'}">danger</c:if>">
+						<td>${task.name}</td>
+						<td>${task.description}</td>
+						<td><c:choose>
+								<c:when test="${task.priority == 'l'}">Low</c:when>
+								<c:when test="${task.priority == 'm'}">Medium</c:when>
+								<c:when test="${task.priority == 'h'}">High</c:when>
+							</c:choose></td>
+						<td>${task.dueDate}</td>
+						<td><c:choose>
+								<c:when test="${task.status == 'p'}">Not Started</c:when>
+								<c:when test="${task.status == 's'}">Started</c:when>
+								<c:when test="${task.status == 'f'}">Finished</c:when>
+							</c:choose></td>
+					</tr>
+				</c:forEach>
 		</table>
 	</div>
 

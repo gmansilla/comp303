@@ -15,7 +15,7 @@ import java.util.Date;
 @NamedQueries({
 		@NamedQuery(name = "Task.findTasksByUserId", query = "SELECT t FROM Task t where t.user.id = :userId"),
 		@NamedQuery(name = "Task.findTaskById", query = "SELECT t FROM Task t where t.id = :taskId"),
-		@NamedQuery(name = "Task.getPendingTasksByUserId", query = "SELECT t FROM Task t where t.status <> 'f' and t.user.id = :userId order by t.dueDate DESC"),
+		@NamedQuery(name = "Task.getPendingTasksByUserId", query = "SELECT t FROM Task t where t.status <> 'f' and t.user.id = :userId order by t.dueDate ASC"),
 		@NamedQuery(name = "Task.getFinishedTasksByUserId", query = "SELECT t FROM Task t where t.status = 'f' and t.user.id = :userId"), 
 		})
 public class Task implements Serializable {
