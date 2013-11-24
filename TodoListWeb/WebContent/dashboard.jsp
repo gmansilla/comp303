@@ -47,7 +47,7 @@
 				</tr>
 			</thead>
 			<tbody>
-				<c:forEach items="${requestScope.taskList}" var="task">
+				<c:forEach items="${requestScope.tasksPending}" var="task">
 					<tr class="<c:if test="${task.priority == 'h'}">danger</c:if>">
 						<td>${task.name}</td>
 						<td>${task.description}</td>
