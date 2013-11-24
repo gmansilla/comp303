@@ -6,19 +6,17 @@ import javax.persistence.*;
 
 import java.util.Date;
 
-
 /**
  * The persistent class for the tasks database table.
  * 
  */
 @Entity
-@Table(name="tasks")
+@Table(name = "tasks")
 @NamedQueries({
-	@NamedQuery(name="Task.findTasksByUserId", query="SELECT t FROM Task t where t.user.id = :userId"),
-	@NamedQuery(name="Task.findTaskById", query="SELECT t FROM Task t where t.id = :taskId"),
-	@NamedQuery(name="Task.getPendingTasksByUserId", query="SELECT t FROM Task t where t.status != 'f' and t.user.id = :userId"),
-	@NamedQuery(name="Task.getFinishedTasksByUserId", query="SELECT t FROM Task t where t.status = 'f' and t.user.id = :userId"),
-})
+		@NamedQuery(name = "Task.findTasksByUserId", query = "SELECT t FROM Task t where t.user.id = :userId"),
+		@NamedQuery(name = "Task.findTaskById", query = "SELECT t FROM Task t where t.id = :taskId"),
+		@NamedQuery(name = "Task.getPendingTasksByUserId", query = "SELECT t FROM Task t where t.status <> 'f' and t.user.id = :userId"),
+		@NamedQuery(name = "Task.getFinishedTasksByUserId", query = "SELECT t FROM Task t where t.status = 'f' and t.user.id = :userId"), })
 public class Task implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -31,7 +29,7 @@ public class Task implements Serializable {
 	private String description;
 
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name="due_date")
+	@Column(name = "due_date")
 	private Date dueDate;
 
 	private String name;
@@ -40,7 +38,7 @@ public class Task implements Serializable {
 
 	private String status;
 
-	//bi-directional many-to-one association to User
+	// bi-directional many-to-one association to User
 	@ManyToOne
 	private User user;
 
@@ -110,12 +108,12 @@ public class Task implements Serializable {
 	public void setUser(User user) {
 		this.user = user;
 	}
-	
+
 	public String toString() {
-		return "Task Name: " + this.name + ", Desc: " + this.description 
-				+ ", Priority: " + this.priority
-				+ ", Status: " + this.status + ", Due date: " + this.dueDate.toString() 
-				+ ", Created: " + this.created.toString();
+		return "Task Name: " + this.name + ", Desc: " + this.description
+				+ ", Priority: " + this.priority + ", Status: " + this.status
+				+ ", Due date: " + this.dueDate.toString() + ", Created: "
+				+ this.created.toString();
 	}
 
 }
