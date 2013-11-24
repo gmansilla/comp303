@@ -48,51 +48,43 @@
 			</thead>
 			<tbody>
 				<c:forEach items="${requestScope.taskList}" var="task">
-					<c:choose>
-						<c:when test="${task.priority == 'h'}">
-							<tr class="danger">
-						</c:when>
-						<c:otherwise>
-							<tr>
-						</c:otherwise>
-					</c:choose>
-					<td>${task.name}</td>
-					<td>${task.description}</td>
-					<td><c:choose>
-							<c:when test="${task.priority == 'l'}">Low</c:when>
-							<c:when test="${task.priority == 'm'}">Medium</c:when>
-							<c:when test="${task.priority == 'h'}">High</c:when>
-						</c:choose></td>
-					<td>${task.dueDate}</td>
-					<td><c:choose>
-							<c:when test="${task.status == 'p'}">Not Started</c:when>
-							<c:when test="${task.status == 's'}">Started</c:when>
-							<c:when test="${task.status == 'f'}">Finished</c:when>
-						</c:choose></td>
-					<td>
-					<i class="glyphicon glyphicon-edit"></i> 
-					<a
-						href="${pageContext.request.contextPath}/tasks?id=${task.id}">Edit</a>
-						<c:choose>
-							<c:when test="${task.status == 'p'}">
-							<i class="glyphicon glyphicon-play"></i> 
-								<a name="taskFinish"
-									href="${pageContext.request.contextPath}/tasks?id=${task.id}&status=s">
-									Start</a>
-							</c:when>
-							<c:when test="${task.status == 's'}">
-							<i class="glyphicon glyphicon-ok"></i> 
-								<a name="taskFinish"
-									href="${pageContext.request.contextPath}/tasks?id=${task.id}&status=f">
-									Finish</a>
-							</c:when>
-						</c:choose></td>
+					<tr class="<c:if test="${task.priority == 'h'}">danger</c:if>">
+						<td>${task.name}</td>
+						<td>${task.description}</td>
+						<td><c:choose>
+								<c:when test="${task.priority == 'l'}">Low</c:when>
+								<c:when test="${task.priority == 'm'}">Medium</c:when>
+								<c:when test="${task.priority == 'h'}">High</c:when>
+							</c:choose></td>
+						<td>${task.dueDate}</td>
+						<td><c:choose>
+								<c:when test="${task.status == 'p'}">Not Started</c:when>
+								<c:when test="${task.status == 's'}">Started</c:when>
+								<c:when test="${task.status == 'f'}">Finished</c:when>
+							</c:choose></td>
+						<td>
+							<i class="glyphicon glyphicon-edit"></i> 
+							<a href="${pageContext.request.contextPath}/tasks?id=${task.id}">Edit</a>
+							<c:choose>
+								<c:when test="${task.status == 'p'}">
+								<i class="glyphicon glyphicon-play"></i> 
+									<a name="taskFinish"
+										href="${pageContext.request.contextPath}/tasks?id=${task.id}&status=s">
+										Start</a>
+								</c:when>
+								<c:when test="${task.status == 's'}">
+								<i class="glyphicon glyphicon-ok"></i> 
+									<a name="taskFinish"
+										href="${pageContext.request.contextPath}/tasks?id=${task.id}&status=f">
+										Finish</a>
+								</c:when>
+							</c:choose>
+						</td>
 					</tr>
 				</c:forEach>
 			</tbody>
 		</table>
-		<hr>
-
+		
 		<h3>Tasks already finished</h3>
 		<table class="table table-bordered">
 			<thead>
