@@ -84,7 +84,9 @@ public class DashboardServlet extends HttpServlet {
 		int finishedTasksCount = tasksFinished.size();
 
 		// show the page
-		request.setAttribute("taskList", taskList);
+		request.setAttribute("tasksPending", tasksPending);
+		request.setAttribute("tasksFinished", tasksFinished);
+		
 		request.setAttribute("pendingTasksCount", pendingTasksCount);
 		request.setAttribute("totalTasksCount", totalTasksCount);
 		request.setAttribute("finishedTasksCount", finishedTasksCount);

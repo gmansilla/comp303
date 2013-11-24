@@ -57,10 +57,6 @@ public class Tasks {
 		// not implemented
 	}
 
-	public List<Task> viewPendingTasks(int userId) {
-		return null;
-	}
-
 	public List<Task> viewTasksByPriority(int userId, char priorityValue) {
 		return null;
 	}
