@@ -14,7 +14,6 @@ import todolist.entities.Task;
 
 public class Tasks {
 
-	private static Task task = null;
 	private static List<Task> tasks = null;
 	private static EntityManagerFactory emf = null;
 

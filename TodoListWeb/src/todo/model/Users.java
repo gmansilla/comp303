@@ -14,7 +14,6 @@ import todolist.entities.User;
 
 public class Users {
 
-private static User user = null;
 private static EntityManagerFactory emf = null;
 final String salt = "password";
 	
