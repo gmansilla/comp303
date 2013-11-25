@@ -49,10 +49,6 @@ public class Tasks {
 		return true;
 	}
 
-	public void deleteTask(int taskId) {
-
-	}
-
 	/**
 	 * Updates a given Task
 	 * 
@@ -129,10 +125,28 @@ public class Tasks {
 		q.setParameter("taskId", taskId);
 		List result = q.getResultList();
 		if (result.size() < 1) {
+			em.close();
 			return null;
 		}
 		Task task = (Task) q.getResultList().get(0);
 		return task;
+	}
+	
+	/**
+	 * Deletes a Task given its ID
+	 * @param taskId
+	 */
+	public void deleteTask(int taskId) {
+		Task task = getTask(taskId);
+		if (task == null) {
+			return;
+		}
+		EntityManager em = emf.createEntityManager();
+		EntityTransaction et = em.getTransaction();
+		et.begin();
+		em.remove(em.merge(task));
+		et.commit();
+		em.close();
 	}
 
 }
