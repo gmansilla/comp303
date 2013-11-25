@@ -37,6 +37,7 @@ final String salt = "password";
 	 * @param email
 	 * @return User
 	 */
+	@SuppressWarnings("unchecked")
 	public User getUser(String email) {
 		EntityManager em = emf.createEntityManager();
 		Query q = em.createNamedQuery("User.findUser");

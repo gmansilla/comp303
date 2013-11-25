@@ -13,7 +13,7 @@ import javax.persistence.Query;
 import todolist.entities.Task;
 
 public class Tasks {
-	
+
 	private static List<Task> tasks = null;
 	private static EntityManagerFactory emf = null;
 
@@ -39,6 +39,9 @@ public class Tasks {
 	 * @return
 	 */
 	public boolean addTask(Task newtask) {
+		if (newtask.getName().isEmpty()) { 
+			return false;
+		}
 		EntityManager em = emf.createEntityManager();
 		EntityTransaction et = em.getTransaction();
 		et.begin();

@@ -121,14 +121,17 @@ public class TodoServlet extends HttpServlet {
 		newTask.setStatus(status);
 		newTask.setCreated(dateCreated);
 		newTask.setDueDate(dueDate);
-		System.out.println(newTask);
 
 		Tasks tasks = new Tasks();
 		if(taskId == null || taskId.equalsIgnoreCase("")) {
 			if (tasks.addTask(newTask)) {
 				RequestDispatcher rd = request.getRequestDispatcher("dashboard");
 				rd.forward(request, response);
-			}			
+			} else {
+				request.setAttribute("message", "You need to provide a name");
+				RequestDispatcher rd = request.getRequestDispatcher("error.jsp");
+				rd.forward(request, response);
+			}	
 			// if taskId is not there add
 		} else {
 			// if taskId is there update
