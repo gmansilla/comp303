@@ -40,6 +40,9 @@ public class Tasks {
 	 * @return
 	 */
 	public boolean addTask(Task newtask) {
+		if (newtask.getName().isEmpty()) { 
+			return false;
+		}
 		EntityManager em = emf.createEntityManager();
 		EntityTransaction et = em.getTransaction();
 		et.begin();
