@@ -26,7 +26,6 @@ public class UserServlet extends HttpServlet {
      */
     public UserServlet() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
 	/**
@@ -49,11 +48,9 @@ public class UserServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
 		HttpSession session = request.getSession();
 		Users user = new Users();
 		String responsePage = "/error.jsp";
-		
 		String useremail = request.getParameter("useremail");
 		String password = request.getParameter("password");
 
@@ -67,7 +64,7 @@ public class UserServlet extends HttpServlet {
 				loginUser.setEmail(useremail);
 				loginUser.setPassword(password);
 				User loggedinUser = user.loginUser(loginUser);
-				if (loggedinUser == null) {
+				if (loggedinUser == null) { //either email or password is wrong.
 					throw new UserNotFoundException("Unable to authenticate the user");
 				} 
 				// login success
@@ -75,11 +72,11 @@ public class UserServlet extends HttpServlet {
 				session.setAttribute("userId", loggedinUser.getId());
 				session.setAttribute("username", loggedinUser.getUsername());
 				session.setAttribute("useremail", loggedinUser.getEmail());
-				
 			}
 			
 		} catch (UserNotFoundException unf) {
-
+			request.setAttribute("message", unf.getMessage());
+			unf.printStackTrace();
 		} finally {
 			System.out.println("Redirect to " + responsePage);
 			RequestDispatcher rd = request.getRequestDispatcher(responsePage);

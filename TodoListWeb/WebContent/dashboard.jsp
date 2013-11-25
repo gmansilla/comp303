@@ -65,6 +65,8 @@
 						<td>
 							<i class="glyphicon glyphicon-edit"></i> 
 							<a href="${pageContext.request.contextPath}/tasks?id=${task.id}">Edit</a>
+							<i class="glyphicon glyphicon-trash"></i>
+							<a href="${pageContext.request.contextPath}/tasks?id=${task.id}&status=d">Delete</a>
 							<c:choose>
 								<c:when test="${task.status == 'p'}">
 								<i class="glyphicon glyphicon-play"></i> 
